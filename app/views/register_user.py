@@ -1,8 +1,8 @@
 from flask import Blueprint, request
 
-register_new_user_blueprint = Blueprint("register", __name__)
+bp_newuser = Blueprint("bp_newuser", __name__)
 
-@register_new_user_blueprint.route("/register", methods=["POST"])
+@bp_newuser.route("/register", methods=["POST"])
 def register() -> dict:
     username = request.json["username"]
     email = request.json["email"]
