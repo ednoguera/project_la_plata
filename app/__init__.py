@@ -1,5 +1,5 @@
 from flask import Flask
-from app.register_blueprint import register_new_user_blueprint
+from app.views.register_blueprint import register_new_user_blueprint
 
 def create_app():
     app = Flask(__name__)
