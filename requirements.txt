@@ -2,6 +2,7 @@ alembic==1.6.5
 attrs==21.2.0
 autopep8==1.5.7
 click==8.0.1
+cymysql==0.9.18
 environs==9.3.2
 Flask==2.0.1
 Flask-Migrate==3.0.1
@@ -13,8 +14,11 @@ Jinja2==3.0.1
 Mako==1.1.4
 MarkupSafe==2.0.1
 marshmallow==3.12.2
+mysql-connector-python==8.0.25
 packaging==21.0
 pluggy==0.13.1
+protobuf==3.17.3
+psycopg2-binary==2.9.1
 py==1.10.0
 pycodestyle==2.7.0
 pyparsing==2.4.7
