@@ -15,10 +15,11 @@ def create_app():
 
     app = Flask(__name__)
 
-    #ENVIRONMENT CONFIGURATION
+    #CONFIG TO NOT TRACK WARNING MESSAGES
     app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = env.bool("SQLALCHEMY_TRACK_MODIFICATIONS")
-    # app.config["SQLALCHEMY_DATABASE_URI"] = env.str("SQLALCHEMY_DATABASE_URI")
-    app.config["SQLALCHEMY_DATABASE_URI"] = 'postgresql://postgres:055549@localhost/laplata_db_dev' 
+    
+    #CONFIG TO TRACK THE CONNECTION STRING WITH THE POSTGRES
+    app.config["SQLALCHEMY_DATABASE_URI"] = env.str("SQLALCHEMY_DATABASE_URI") 
 
 
     app.register_blueprint(bp_newuser)
