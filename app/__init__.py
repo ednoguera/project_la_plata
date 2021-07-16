@@ -1,13 +1,15 @@
 #IMPORT SESSION: FLASK APP AND BLUEPRINTS FROM VIEW
 from flask import Flask
-from app.views.register_user import bp_newuser
+from app.views.register_user import bp_user
 from app.views.home import bp_home
 
 #IMPORT DB FROM MODEL
-from app.models.register_model import db
+from app.models.models import db
+from app.models.models import User
 
 #IMPORT ENVIRONS
 from environs import Env
+
 
 def create_app():
     env = Env()
@@ -22,8 +24,12 @@ def create_app():
     app.config["SQLALCHEMY_DATABASE_URI"] = env.str("SQLALCHEMY_DATABASE_URI") 
 
 
-    app.register_blueprint(bp_newuser)
+    app.register_blueprint(bp_user)
     app.register_blueprint(bp_home)
-    db.init_app(app)    
+    db.init_app(app)
+    
+    #CREATE AN APP CONTEXT
+    # app = create_app()
+    # app.app_context().push()
 
     return app
