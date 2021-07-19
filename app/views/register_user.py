@@ -17,13 +17,15 @@ def register() -> dict:
     
     user = User(username=username, email=email)
     
-    db.session.add(user)
-    db.session.commit()
-    
-    return {
-        "request_status": HTTPStatus.CREATED
-    }
-    
+    try:
+        db.session.add(user)
+        db.session.commit()
+        
+        return {
+            "request_status": HTTPStatus.CREATED
+        }
+    except InterruptedError:
+        return {'msg': HTTPStatus.BAD_REQUEST}
 
 # ROUTE TO GET A USER LIST
 @bp_user.route('/', methods=["GET"])

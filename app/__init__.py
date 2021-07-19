@@ -4,7 +4,7 @@ from app.views.register_user import bp_user
 from app.views.home import bp_home
 
 #IMPORT DB FROM MODEL
-from app.models.models import db
+from app.models.models import db, mg
 from app.models.models import User
 
 #IMPORT ENVIRONS
@@ -27,6 +27,7 @@ def create_app():
     app.register_blueprint(bp_user)
     app.register_blueprint(bp_home)
     db.init_app(app)
+    mg.init_app(app, db) 
     
     #CREATE AN APP CONTEXT
     # app = create_app()
