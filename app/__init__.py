@@ -3,6 +3,7 @@ from flask import Flask
 from app.views.register_user import bp_user
 from app.views.home import bp_home
 from app.views.transaction import bp_transactions
+from app.views.monthly_statement import bp_monthly_statements
 
 #IMPORT DB FROM MODEL
 from app.models.models import (
@@ -30,11 +31,8 @@ def create_app():
     app.register_blueprint(bp_user)
     app.register_blueprint(bp_home)
     app.register_blueprint(bp_transactions)
+    app.register_blueprint(bp_monthly_statements)
     db.init_app(app)
-    mg.init_app(app, db) 
-    
-    #CREATE AN APP CONTEXT
-    # app = create_app()
-    # app.app_context().push()
+    mg.init_app(app, db)
 
     return app
