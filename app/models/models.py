@@ -1,10 +1,12 @@
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
+from datetime import datetime
 
 db = SQLAlchemy()
 mg = Migrate()   
 
 class User(db.Model):
+    __tablename__ = "user"
     id = db.Column(db.Integer, nullable=False, autoincrement=True, primary_key=True)
     username = db.Column(db.String(50), unique=True, nullable=False)
     email = db.Column(db.String(100), unique=True, nullable=False)
@@ -17,6 +19,7 @@ class User(db.Model):
 
 
 class Transaction(db.Model):
+    __tablename__ = "transaction"
     transaction_id = db.Column(
         db.Integer, 
         nullable=False, 
@@ -35,6 +38,11 @@ class Transaction(db.Model):
         db.String(3), 
         nullable=False
     )
+    transaction_date = db.Column(
+        db.DateTime(),
+        nullable=False,
+        default=datetime.utcnow
+    )
     user_id = db.Column(
         db.Integer,
         db.ForeignKey('user.id')
@@ -45,11 +53,5 @@ class Transaction(db.Model):
     )
     
     def __repr__(self) -> str:
-        return """{'transaction_id': {}, 
-    'transaction_name': {}, 
-    'transaction_cost': {} }""".format(
-            self.transaction_id, 
-            self.transaction_name, 
-            self.transaction_cost            
-        )
+        return f"Transaction id: {self.transaction_id}"
 

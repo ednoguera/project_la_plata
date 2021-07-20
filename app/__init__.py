@@ -2,10 +2,13 @@
 from flask import Flask
 from app.views.register_user import bp_user
 from app.views.home import bp_home
+from app.views.transaction import bp_transactions
 
 #IMPORT DB FROM MODEL
-from app.models.models import db, mg
-from app.models.models import User
+from app.models.models import (
+    db, 
+    mg
+)
 
 #IMPORT ENVIRONS
 from environs import Env
@@ -26,6 +29,7 @@ def create_app():
 
     app.register_blueprint(bp_user)
     app.register_blueprint(bp_home)
+    app.register_blueprint(bp_transactions)
     db.init_app(app)
     mg.init_app(app, db) 
     
