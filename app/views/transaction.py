@@ -1,43 +1,43 @@
+import enum
 from flask import Blueprint, request
 from http import HTTPStatus
 
+
 # IMPORT DB AND DOMAIN CLASS FROM MODELS
-from app.models.models import db, User, Transaction
+from app.models.models import db, Transaction
 
-bp_transactions = Blueprint('bp_transaction', __name__, url_prefix='/transactions')
 
-def serialize_list(gen_list) -> list:
-    return [{
-            'transaction_id': gen.transaction_id,
-            'transaction_name': gen.transaction_name,
-            'transaction_price': gen.transaction_price,
-            'transaction_type': gen.transaction_type
-        } 
-        for gen in gen_list
-    ]
+# IMPORT TRANSACTION SERVICE
+from app.services.transaction_services import serialize_transaction_list
 
-@bp_transactions.route('/', methods=["GET", "POST"])
-def set_transaction() -> dict:
-    
-    # IF METHOD EQUALS POST
-    if request.method == "POST":
-        transaction = Transaction(
-            transaction_name=request.json["transaction_name"],
-            transaction_price=request.json["transaction_price"],
-            transaction_type=request.json["transaction_type"]
-        )
+bp_transactions = Blueprint('bp_transaction', __name__, url_prefix='/users/<int:user_id>')
         
-        db.session.add(transaction)
-        db.session.commit()
+
+@bp_transactions.route('/transactions', methods=["POST"])
+def set_transaction(user_id: int) -> dict:
     
-        return {
-            'request_status': HTTPStatus.CREATED
-        }
+    transaction = Transaction(
+        transaction_name=request.json["transaction_name"],
+        transaction_price=request.json["transaction_price"],
+        transaction_type=request.json["transaction_type"],
+        user_id=user_id
+    )
     
-    # IF METHOD EQUALS GET    
-    transaction_list = Transaction.query.all()
-    transaction_dict = serialize_list(transaction_list)
-    
+    db.session.add(transaction)
+    db.session.commit()
+
     return {
-        'transactions': transaction_dict
+        'request_status': HTTPStatus.CREATED
     }
+    
+
+@bp_transactions.route('/transactions', methods=["GET"])
+def get_transactions(user_id: int):
+    transaction_map = Transaction.query.filter(Transaction.user_id == user_id)
+    transaction_by_user = serialize_transaction_list(transaction_map)
+    
+    if not transaction_by_user:
+        return "Transaction not exists"
+    print(transaction_by_user)
+    
+    return {'transaction': transaction_by_user}
