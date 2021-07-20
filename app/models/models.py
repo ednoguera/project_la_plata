@@ -38,7 +38,12 @@ class Transaction(db.Model):
         db.String(3), 
         nullable=False
     )
-    transaction_date = db.Column(
+    transaction_month = db.Column(
+        db.String(3),
+        nullable=False,
+        default="JAN"
+    )
+    transaction_timestamp = db.Column(
         db.DateTime(),
         nullable=False,
         default=datetime.utcnow
