@@ -1,8 +1,8 @@
-"""Initial migration
+"""feature: added transaction month and timestamp columns
 
-Revision ID: 0c092860888e
+Revision ID: 58bcef3e605c
 Revises: 
-Create Date: 2021-07-19 13:49:45.446721
+Create Date: 2021-07-19 22:04:23.070167
 
 """
 from alembic import op
@@ -10,7 +10,7 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision = '0c092860888e'
+revision = '58bcef3e605c'
 down_revision = None
 branch_labels = None
 depends_on = None
@@ -31,6 +31,8 @@ def upgrade():
     sa.Column('transaction_name', sa.String(length=100), nullable=False),
     sa.Column('transaction_price', sa.Float(), nullable=False),
     sa.Column('transaction_type', sa.String(length=3), nullable=False),
+    sa.Column('transaction_month', sa.String(length=3), nullable=False),
+    sa.Column('transaction_timestamp', sa.DateTime(), nullable=False),
     sa.Column('user_id', sa.Integer(), nullable=True),
     sa.ForeignKeyConstraint(['user_id'], ['user.id'], ),
     sa.PrimaryKeyConstraint('transaction_id')

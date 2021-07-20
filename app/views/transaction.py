@@ -1,4 +1,3 @@
-import enum
 from flask import Blueprint, request
 from http import HTTPStatus
 
@@ -20,6 +19,7 @@ def set_transaction(user_id: int) -> dict:
         transaction_name=request.json["transaction_name"],
         transaction_price=request.json["transaction_price"],
         transaction_type=request.json["transaction_type"],
+        transaction_month=request.json["transaction_month"],
         user_id=user_id
     )
     
